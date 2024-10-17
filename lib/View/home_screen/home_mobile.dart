@@ -1,4 +1,4 @@
-import 'package:chats/cores/services/hive_services.dart';
+import 'package:chats/View-models/message_state.dart';
 import 'package:hive/hive.dart';
 
 import '../view_imports.dart';
@@ -98,30 +98,40 @@ class _HomeMobileState extends State<HomeMobile> {
                             Icons.search,
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: hBackgroundColor),
-                          child: const Center(
-                            child: Text('Direct Messages',
-                                style: TextStyle(color: hSecondaryColor)),
+                        GestureDetector(
+                          onTap: (){
+                            Provider.of<HomeState>(context, listen: false).findConversation();
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: hBackgroundColor),
+                            child: const Center(
+                              child: Text('Direct Messages',
+                                  style: TextStyle(color: hSecondaryColor)),
+                            ),
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: hBackgroundColor),
-                          child: const Center(
-                            child: Text('Group',
-                                style: TextStyle(color: hSecondaryColor)),
+                        GestureDetector(
+                          onTap: (){
+                            Provider.of<HomeState>(context, listen: false).clear();
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: hBackgroundColor),
+                            child: const Center(
+                              child: Text('Group',
+                                  style: TextStyle(color: hSecondaryColor)),
+                            ),
                           ),
                         )
                       ],
@@ -133,7 +143,7 @@ class _HomeMobileState extends State<HomeMobile> {
                       '    Pinned Messages(2)',
                     ),
                   ),
-                  Consumer<HomeState>(builder: (context, homeState, _) {
+                  Consumer<MessageState>(builder: (context, messageState, _) {
                     return FutureBuilder<Box<Conversation>>(
                       future: hiveServices.openBox(),
                       builder: (context, snapshot) {
@@ -148,20 +158,24 @@ class _HomeMobileState extends State<HomeMobile> {
                             valueListenable:
                                 hiveServices.getConversationListenable(),
                             builder: (context, Box<Conversation> box, _) {
-                              final conversationList =
-                                  box.values.toList().cast<Conversation>();
+                              final conversationList = box.values
+                                  .toList()
+                                  .cast<Conversation>()
+                                  .reversed
+                                  .toList();
                               return Flexible(
                                 child: ListView.builder(
                                   itemCount: conversationList.length,
                                   padding: EdgeInsets.zero,
                                   itemBuilder: (context, index) => ChatCard(
                                     conversation: conversationList[index],
-                                    press: () =>Navigator.pushNamed(
+                                    press: () => Navigator.pushNamed(
                                       context,
                                       RouteName.messageScreen,
                                       arguments: {
                                         'conversation': conversationList[index],
                                         'index': index,
+                                        'length': conversationList.length
                                       },
                                     ),
                                   ),
@@ -182,6 +196,7 @@ class _HomeMobileState extends State<HomeMobile> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, RouteName.contactScreen);
+
         },
         child: const Icon(Icons.message),
       ),

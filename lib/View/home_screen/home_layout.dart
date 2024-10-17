@@ -1,4 +1,4 @@
-
+import 'package:chats/View-models/message_state.dart';
 import 'package:chats/View/home_screen/home_mobile.dart';
 import 'package:chats/View/home_screen/home_web.dart';
 
@@ -11,17 +11,32 @@ class HomeLayout extends StatefulWidget {
   State<HomeLayout> createState() => _HomeLayoutState();
 }
 
-class _HomeLayoutState extends State<HomeLayout> {
-
-/*
- @override
+class _HomeLayoutState extends State<HomeLayout> with WidgetsBindingObserver {
+  @override
   void initState() {
     super.initState();
-    Future.microtask(() {
+    WidgetsBinding.instance.addObserver(this);
+    /* Future.microtask(() {
       Provider.of<HomeState>(context, listen: false).findConversation();
-    });
+    });*/
   }
-*/
+
+  @override
+  void dispose() {
+    // Unregister the observer
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      print('application in background');
+    } else if (state == AppLifecycleState.detached) {
+      print('application closed');
+    } else if (state == AppLifecycleState.resumed) {
+      // App is resumed (comes to the foreground)
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

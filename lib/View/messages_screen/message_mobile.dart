@@ -4,10 +4,11 @@ import 'package:chats/View/messages_screen/widgets/message_item.dart';
 import '../view_imports.dart';
 
 class MessageMobile extends StatefulWidget {
-  const MessageMobile({super.key, this.conversation, this.index});
+  const MessageMobile({super.key, this.conversation, this.index, this.length});
 
   final Conversation? conversation;
   final int? index;
+  final int? length;
 
   @override
   State<MessageMobile> createState() => _MessageMobileState();
@@ -24,12 +25,14 @@ class _MessageMobileState extends State<MessageMobile> {
 
   @override
   void dispose() {
-    if (widget.index != null) {
-      messageState.storeMessages(widget.index);
+    if (widget.length == 0) {
+      Future.microtask(() => messageState.storeConversation(widget.length));
+    }else{
+      Future.microtask(() => messageState.storeMessages(widget.index,widget.length));
     }
+
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {

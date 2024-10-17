@@ -4,10 +4,11 @@ import 'package:chats/View/messages_screen/message_web.dart';
 import '../view_imports.dart';
 
 class MessageLayout extends StatefulWidget {
-  const MessageLayout({super.key, required this.conversation,this.index});
+  const MessageLayout({super.key, required this.conversation,this.index,this.length});
 
   final Conversation conversation;
   final int? index;
+  final int? length;
 
   @override
   State<MessageLayout> createState() => _MessageLayoutState();
@@ -25,6 +26,7 @@ class _MessageLayoutState extends State<MessageLayout> {
           return MessageMobile(
             conversation: widget.conversation,
             index: widget.index,
+              length: widget.length
           );
         }
       },

@@ -32,4 +32,9 @@ class HiveServices {
     var box = await openBox();
     box.deleteAt(index);
   }
+
+  Future<void> clearBox() async {
+    var box = await openBox();
+    await box.clear();
+  }
 }

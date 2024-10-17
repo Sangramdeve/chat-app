@@ -87,6 +87,33 @@ class Values{
         "last_seen": "2024-10-05T10:02:51.719Z",
         "status": true
       }
-    }
+    },
+    {
+      "members": ["user1", "user2"],
+      "lastMessage": "Let's meet tomorrow.",
+      "chats": [
+        {
+          "messageId": "msg123",
+          "senderId": "user1",
+          "text": "Hey, how are you?",
+          "timestamp": "2024-10-05T12:34:56Z",
+          "read": true
+        },
+        {
+          "messageId": "msg124",
+          "senderId": "user2",
+          "text": "I'm good, how about you?",
+          "timestamp": "2024-10-05T12:36:00Z",
+          "read": false
+        },
+      ],
+      "userDetails": {
+        "uid": "user3",
+        "fullName": "Dustin Smith",
+        "image_url": "https://example.com/janesmith.jpg",
+        "last_seen": "2024-10-05T11:00:34.772Z",
+        "status": false
+      }
+    },
   ];
 }

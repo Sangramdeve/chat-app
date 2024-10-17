@@ -18,10 +18,12 @@ class Routes{
         final arguments = setting.arguments as Map<String, dynamic>;
         final conversation = arguments['conversation'] as Conversation;
         final index = arguments['index'] as int;
+        final length = arguments['length'] as int;
         return MaterialPageRoute(
           builder: (context) => MessageLayout(
             conversation: conversation,
             index: index,
+              length: length
           ),
         );
       case RouteName.loginScreen:

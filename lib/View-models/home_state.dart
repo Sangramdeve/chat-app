@@ -38,10 +38,14 @@ class HomeState with ChangeNotifier {
       }
     }
 
-    // Optional: Print the conversations for debugging
+   /* // Optional: Print the conversations for debugging
     for (var conversation in conversations) {
       print('Conversation: $conversation');
-    }
+    }*/
+  }
+
+  Future<void> clear() async {
+   await hiveServices.clearBox();
   }
 
 

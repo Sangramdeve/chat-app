@@ -17,11 +17,10 @@ class ChatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Access theme-related properties
     final theme = Theme.of(context);
     final textColor = theme.textTheme.bodyLarge?.color ?? Colors.black;
-    final secondaryTextColor = theme.colorScheme.secondary.withOpacity(0.64);
-    final primaryColor = theme.primaryColor;
+
+    String timeStamp = conversation.chats.last.timestamp;
 
     return InkWell(
       onTap: press,
@@ -95,7 +94,7 @@ class ChatCard extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    formatDate(conversation.userDetails.lastSeen),
+                    formatDate(timeStamp),
                     style: TextStyle(
                       color:  Theme.of(context).brightness == Brightness.dark
                           ? Colors.white : Colors.grey[900],

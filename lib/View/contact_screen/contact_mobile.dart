@@ -53,7 +53,6 @@ class _ContactMobileState extends State<ContactMobile> {
       ),
       body:  Column(
         children: [
-          const Text('Contacts on chats'),
           Expanded(
             child: ListView.builder(
               itemCount: _contacts.length,
@@ -71,13 +70,15 @@ class _ContactMobileState extends State<ContactMobile> {
                       title: Text(contact.displayName ?? 'No Name'),
                       subtitle: Text(contact.phones.isNotEmpty ? contact.phones.first.number : 'No Phone'),
                       onTap: ()  {
-                        snapshot.findUser(contact.phones.first.number);
-                        Navigator.pushNamed(context, RouteName.messageScreen,
+                        snapshot.findUser(contact.phones.first.number).then((_)=>
+                            Navigator.pushNamed(context, RouteName.messageScreen,
                           arguments: {
                             'conversation': snapshot.conversation,
-                            'index': 3,
+                            'index': -1,
+                            'length': 0,
                           },
-                        );
+                        ));
+
                       },
                     );
                   }

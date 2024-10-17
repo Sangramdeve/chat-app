@@ -1,3 +1,5 @@
+import 'package:chats/View-models/message_state.dart';
+
 import '../../view_imports.dart';
 
 class ChatInputField extends StatefulWidget {
@@ -10,10 +12,10 @@ class ChatInputField extends StatefulWidget {
 }
 
 class _ChatInputFieldState extends State<ChatInputField> {
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return SafeArea(
       minimum: const EdgeInsets.all(10),
       child: Row(
@@ -31,19 +33,24 @@ class _ChatInputFieldState extends State<ChatInputField> {
                   width: 1,
                 ),
               ),
-              child: const Row(
+              child:  Row(
                 children: [
                   Icon(
                     Icons.sentiment_satisfied_alt_outlined,
                   ),
                   SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Type a message...",
-                        border: InputBorder.none,
-                      ),
-                    ),
+                  Consumer<MessageState>(
+                    builder: (context, snapshot,_) {
+                      return Expanded(
+                        child: TextField(
+                          controller: snapshot.messageController,
+                          decoration: InputDecoration(
+                            hintText: "Type a message...",
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      );
+                    }
                   ),
                   Icon(
                     Icons.attach_file,
