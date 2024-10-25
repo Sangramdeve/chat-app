@@ -1,5 +1,7 @@
-import 'package:chats/cores/const/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../../cores/const/constants.dart';
+
 class AvatarWidget extends StatelessWidget {
   final String? foregroundImageUrl;
 
@@ -10,47 +12,32 @@ class AvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        const CircleAvatar(
-          radius: 30,
-          backgroundImage: AssetImage('assets/placeholder.jpg'),
+    return Container(
+      width: 60,
+      height: 60,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.black,
+        border: Border.all(
+          color: backgroundColor,
+          width: 2,
         ),
-        if (foregroundImageUrl != null && foregroundImageUrl!.isNotEmpty)
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: NetworkImage(foregroundImageUrl!), // Foreground image
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 6,
+            offset: Offset(3, 3),
           ),
-        Positioned(
-          bottom: -15, // Adjust position for better visibility
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), // Padding for the label
-            decoration: BoxDecoration(
-              color: Colors.black54, // Semi-transparent background
-              borderRadius: BorderRadius.circular(15), // Rounded corners
-            ),
-            child: const Text(
-              'Contact',
-              style: TextStyle(
-                color: Colors.white, // White text for contrast
-                fontSize: 12, // Smaller font size
-              ),
-            ),
-          ),
+        ],
+      ),
+      child: FractionallySizedBox(
+        widthFactor: 0.9,
+        heightFactor: 0.9,
+        child: CircleAvatar(
+          radius: 24,
+          backgroundImage: NetworkImage(foregroundImageUrl!),
         ),
-      ],
+      ),
     );
   }
 }

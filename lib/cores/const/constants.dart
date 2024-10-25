@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 const Color myGrey900 = Color(0xFF121212);
 // Primary colors
 const hPrimaryColor = Color(0xFF6A5BC2); // Main brand color
+const backgroundColor = Color(0xFFEAE30A);
 const hSecondaryColor = Color(0xFF1A1A1A); // Secondary color for texts, etc.
 const hErrorColor = Color(0xFFE74C3C); // Error color
 
