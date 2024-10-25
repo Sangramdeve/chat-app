@@ -19,8 +19,8 @@ class UserDetailsBar extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        const CircleAvatar(
-          backgroundImage: AssetImage("assets/placeholder.jpg"),
+         CircleAvatar(
+          backgroundImage: NetworkImage(userDetails.imageUrl),
           radius: 20,
         ),
         const SizedBox(width: 10),

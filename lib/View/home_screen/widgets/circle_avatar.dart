@@ -1,6 +1,5 @@
 import 'package:chats/cores/const/constants.dart';
 import 'package:flutter/material.dart';
-
 class AvatarWidget extends StatelessWidget {
   final String? foregroundImageUrl;
 
@@ -34,13 +33,23 @@ class AvatarWidget extends StatelessWidget {
               ),
             ),
           ),
-        const Positioned(
-          top: 65,
-          child: Text(
-            'Contact',
-            style: TextStyle(color: hColorLight),
+        Positioned(
+          bottom: -15, // Adjust position for better visibility
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), // Padding for the label
+            decoration: BoxDecoration(
+              color: Colors.black54, // Semi-transparent background
+              borderRadius: BorderRadius.circular(15), // Rounded corners
+            ),
+            child: const Text(
+              'Contact',
+              style: TextStyle(
+                color: Colors.white, // White text for contrast
+                fontSize: 12, // Smaller font size
+              ),
+            ),
           ),
-        )
+        ),
       ],
     );
   }

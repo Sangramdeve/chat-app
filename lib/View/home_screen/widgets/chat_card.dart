@@ -1,9 +1,7 @@
 import 'package:chats/models/hive_models/conversation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../cores/const/constants.dart';
-
-
+import '../../../cores/const/constants.dart';
 
 class ChatCard extends StatelessWidget {
   const ChatCard({
@@ -31,9 +29,9 @@ class ChatCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                const CircleAvatar(
+                 CircleAvatar(
                   radius: 24,
-                  backgroundImage: AssetImage("assets/placeholder.jpg"),
+                  backgroundImage: NetworkImage(conversation.userDetails.imageUrl),
                 ),
                 if (conversation.userDetails.status)
                   Positioned(
@@ -73,7 +71,7 @@ class ChatCard extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            conversation.lastMessage,
+                            _truncateString(conversation.chats.last.text,30),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -114,6 +112,13 @@ class ChatCard extends StatelessWidget {
   }
 }
 
+String _truncateString(String str, int maxLength) {
+  if (str.length <= maxLength) {
+    return str;
+  } else {
+    return str.substring(0, maxLength) + '...';
+  }
+}
 
 
 String formatDate(String value) {

@@ -1,44 +1,27 @@
 import '../view_imports.dart';
 
-class SplashMobile extends StatefulWidget {
+class SplashMobile extends StatelessWidget {
   const SplashMobile({super.key});
 
   @override
-  State<SplashMobile> createState() => _SplashMobileState();
-}
-
-class _SplashMobileState extends State<SplashMobile> {
-
-  @override
-  void initState() {
-    final loginState = Provider.of<LoginState>(context, listen: false);
-    loginState.getLoggedInStatus();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body:  Consumer<LoginState>(builder: (context, snapshot, _) {
-        return Column(
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/background_image.png'), // Replace with your background image path
+            fit: BoxFit.cover, // This will cover the entire screen
+          ),
+        ),
+        child: Column(
           children: [
             Spacer(),
-            ElevatedButton(
-                onPressed: () {
-                  if(snapshot.isLoggedIn == false){
-                    Navigator.pushReplacementNamed(context, RouteName.loginScreen);
-                  }else if(snapshot.isLoggedIn){
-                    Navigator.pushReplacementNamed(context, RouteName.homeScreen);
-                  }
-                },
-                child: Text('Splash Screen: ${snapshot.isLoggedIn}')),
-            Center(
-              child: Text('Splash Screen: ${snapshot.isLoggedIn ? "Logged In" : "Not Logged In"}'),
-            ),
+            Center(child: Image.asset('assets/real_time_chat.png')),
             Spacer(),
           ],
-        );
-      }),
+        ),
+      ),
     );
   }
+
 }

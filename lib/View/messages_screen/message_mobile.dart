@@ -21,17 +21,34 @@ class _MessageMobileState extends State<MessageMobile> {
   void initState() {
     super.initState();
     messageState = Provider.of<MessageState>(context, listen: false);
+    messageState.connect();
+    messageState.updateConversation(widget.conversation);
   }
 
   @override
   void dispose() {
+    messageState.disconnect();
     if (widget.length == 0) {
       Future.microtask(() => messageState.storeConversation(widget.length));
-    }else{
-      Future.microtask(() => messageState.storeMessages(widget.index,widget.length));
+    } else {
+      Future.microtask(
+          () => messageState.storeMessages(widget.index, widget.length));
     }
-
     super.dispose();
+  }
+
+  void sendPrivateMessage() {
+    String senderId = messageState.senderId;
+    String receiverId =
+        widget.conversation!.members.firstWhere((id) => id != senderId);
+    String message = messageState.message;
+    String conversationId = widget.conversation!.conversationId;
+    try {
+      messageState.sendMessage(senderId, receiverId, message, conversationId);
+      print('working');
+    } catch (e) {
+      print('error:$e');
+    }
   }
 
   @override
@@ -39,7 +56,6 @@ class _MessageMobileState extends State<MessageMobile> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
-
     return SafeArea(
         child: Stack(
       children: [
@@ -65,6 +81,9 @@ class _MessageMobileState extends State<MessageMobile> {
             child: Container(
               height: screenHeight - screenHeight * 0.14,
               decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage('assets/background_image.png'),
+                    fit: BoxFit.cover,
+                  ),
                   color: Theme.of(context).brightness == Brightness.dark
                       ? Colors.grey[900] // Dark theme color
                       : Colors.white,
@@ -82,8 +101,9 @@ class _MessageMobileState extends State<MessageMobile> {
                     child: ListView.builder(
                       reverse: true,
                       itemCount: reversedMessages.length,
-                      itemBuilder: (context, index) =>
-                          MessageItem(messages: reversedMessages[index]),
+                      itemBuilder: (context, index) => MessageItem(
+                        messages: reversedMessages[index],
+                      ),
                     ),
                   );
                 }),
@@ -96,7 +116,7 @@ class _MessageMobileState extends State<MessageMobile> {
           child: Consumer<MessageState>(builder: (context, snapshot, _) {
             return ChatInputField(
               onButtonPressed: () {
-                snapshot.sendNewMessage(widget.index, widget.conversation);
+                snapshot.sendNewMessage().then((_) => sendPrivateMessage());
               },
             );
           }),

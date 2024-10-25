@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color(0xFF00BF6D);
+
 const Color myGrey900 = Color(0xFF121212);
 // Primary colors
 const hPrimaryColor = Color(0xFF6A5BC2); // Main brand color
@@ -22,6 +22,7 @@ const neuLightColor = Color(0xFFF8F8F8); // Light surface color for neumorphic e
 
 // Other common colors
 const kErrorColor = Color(0xFFDB4437); // Error color used across the app
-const kSecondaryColor = Color(0xFF00C853); // Secondary color
+const kPrimaryColor = Color(0xFFD1C799);
+const kSecondaryColor = Color(0xFF10592D); // Secondary color
 const kContentColorLightTheme = Color(0xFF1D1D35); // Content color for light theme
 const kContentColorDarkTheme = Color(0xFFF5FCF9); // Content color for dark theme

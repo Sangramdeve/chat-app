@@ -1,8 +1,9 @@
 class ApiUrls{
-  static String login = 'http://10.0.2.2:8000/api/user/login';
-  static String signup = 'http://10.0.2.2:8000/api/user/signup';
-  static String sendMessages = 'http://10.0.2.2:8000/api/chats/messages';
-  static String getConversation = 'http://10.0.2.2:8000/api/chats/conversations/all/';
-  static String createConversation = 'http://10.0.2.2:8000/api/chats/conversations';
-  static String sendMessage = 'http://10.0.2.2:8000/api/chats/messages/';
+  static String baseUrl = 'https://chats-backend-48y2.onrender.com';
+  static String login = 'https://chats-backend-48y2.onrender.com/api/user/login';
+  static String signup = 'https://chats-backend-48y2.onrender.com/api/user/signup';
+  static String sendMessages = 'https://chats-backend-48y2.onrender.com/api/chats/messages';
+  static String getConversation = 'https://chats-backend-48y2.onrender.com/api/chats/conversations/all/';
+  static String createConversation = 'https://chats-backend-48y2.onrender.com/api/chats/conversations';
+  static String sendMessage = 'https://chats-backend-48y2.onrender.com/api/chats/messages/';
 }

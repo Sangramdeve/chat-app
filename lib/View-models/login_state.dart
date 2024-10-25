@@ -52,6 +52,7 @@ class LoginState with ChangeNotifier {
     try {
       await firebaseServices.addDocuments(
           collectionPath: 'Users', document: user!.uid, data: userCred);
+      logInStatus(true);
       await SharedPrefServices.savePreference('uid', user!.uid);
     } catch (e) {
       debugPrint('Error uploading user data: $e');

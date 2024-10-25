@@ -17,8 +17,8 @@ class ConversationAdapter extends TypeAdapter<Conversation> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Conversation(
-      members: (fields[0] as List).cast<String>(),
-      lastMessage: fields[1] as String,
+      conversationId: fields[0] as String,
+      members: (fields[1] as List).cast<String>(),
       chats: (fields[2] as List).cast<Messages>(),
       userDetails: fields[3] as UserData,
     );
@@ -29,9 +29,9 @@ class ConversationAdapter extends TypeAdapter<Conversation> {
     writer
       ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.members)
+      ..write(obj.conversationId)
       ..writeByte(1)
-      ..write(obj.lastMessage)
+      ..write(obj.members)
       ..writeByte(2)
       ..write(obj.chats)
       ..writeByte(3)

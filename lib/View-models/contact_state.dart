@@ -26,8 +26,8 @@ class ContactState with ChangeNotifier {
         UserData userData =
             UserData.fromJson(user.data() as Map<String, dynamic>);
         _conversation = Conversation(
+            conversationId: '',
             members: [senderId,userData.uid],
-            lastMessage: '',
             chats: [],
             userDetails: userData);
 

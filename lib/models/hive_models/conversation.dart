@@ -6,10 +6,10 @@ part 'conversation.g.dart';
 @HiveType(typeId: 0)
 class Conversation {
   @HiveField(0)
-  final List<String> members;
+  final String conversationId;
 
   @HiveField(1)
-  String lastMessage;
+  final List<String> members;
 
   @HiveField(2)
   final List<Messages> chats;
@@ -18,8 +18,8 @@ class Conversation {
   final UserData userDetails;
 
   Conversation({
+    required this.conversationId,
     required this.members,
-    required this.lastMessage,
     required this.chats,
     required this.userDetails,
   });
@@ -27,19 +27,36 @@ class Conversation {
   // Factory method to create a Conversation from JSON
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
-      members: List<String>.from(json['members']),
-      lastMessage: json['lastMessage'] as String,
-      chats: (json['chats'] as List<dynamic>)
+      conversationId: json['_id'] as String? ?? '', // Fallback if null
+      members: (json['members'] != null) ? List<String>.from(json['members']) : <String>[],
+      chats: (json['messages'] != null) ? (json['messages'] as List<dynamic>)
           .map((chat) => Messages.fromJson(chat as Map<String, dynamic>))
-          .toList(),
-      userDetails: UserData.fromJson(json['userDetails']),
+          .toList()
+          : <Messages>[], // Handle null messages
+      userDetails: json['userDetails'] != null
+          ? UserData.fromJson(json['userDetails'])
+          : UserData(uid: '', fullName: '', imageUrl: '', lastSeen: '', status: false),
     );
   }
 
 
   @override
   String toString() {
-    return 'Conversation(members: $members, lastMessage: $lastMessage, chats: $chats, userDetails: $userDetails)';
+    return 'Conversation( conversationId: $conversationId,members: $members, chats: $chats, userDetails: $userDetails)';
+  }
+
+  Conversation copyWith({
+    String? conversationId,
+    List<String>? members,
+    List<Messages>? chats,
+    UserData? userDetails,
+  }) {
+    return Conversation(
+      conversationId: conversationId ?? this.conversationId,
+      members: members ?? this.members,
+      chats: chats ?? this.chats,
+      userDetails: userDetails ?? this.userDetails,
+    );
   }
 }
 
@@ -71,8 +88,8 @@ class Messages {
   // Factory method to create Messages from JSON
   factory Messages.fromJson(Map<String, dynamic> json) {
     return Messages(
-      messageId: json['messageId'] as String,
-      senderId: json['senderId'] as String,
+      messageId: json['_id'] as String,
+      senderId: json['sender_id'] as String,
       text: json['text'] as String,
       timestamp: json['timestamp'] as String,
       read: json['read'] as bool,
@@ -114,7 +131,7 @@ class UserData {
   factory UserData.fromJson(Map<String, dynamic> json) {
     // Check if last_seen is a Timestamp and convert it
     String lastSeenValue = json['last_seen'] is Timestamp
-        ? (json['last_seen'] as Timestamp).toDate().toString() // Convert Timestamp to DateTime, then to String
+        ? (json['last_seen'] as Timestamp).toDate().toString()
         : json['last_seen'] as String;
 
     return UserData(

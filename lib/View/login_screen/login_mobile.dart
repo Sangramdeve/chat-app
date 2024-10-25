@@ -19,94 +19,104 @@ class _LoginMobileState extends State<LoginMobile> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          const Spacer(),
-          CustomButtons(
-            onTap: () {
-             Navigator.push(context, MaterialPageRoute(builder: (context)=> PhoneNumberPicker()));
-            },
-            text: 'Sign in with Phone number',
-            iconUrl: null,
-          ),
-          Consumer<LoginState>(builder: (context, snapshot, _) {
-            return CustomButtons(
-              onTap: () async {
-                User? user = await authServices.signInWithGoogle();
-                if (user != null) {
-                  snapshot.updateUser(user);
-                  await snapshot.logInStatus(true);
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> PhoneNumberPicker()));
-                }
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(image: AssetImage('assets/background_image.png'),
+          fit: BoxFit.cover,
+        )
+      ),
+      child: SafeArea(
+        child: Column(
+          children: [
+            const Spacer(),
+
+            Image.asset('assets/real_time_chat.png'),
+            const Spacer(),
+            CustomButtons(
+              onTap: () {
+               Navigator.push(context, MaterialPageRoute(builder: (context)=> PhoneNumberPicker()));
               },
-              text: 'Sign in with Google',
-              iconUrl: 'assets/ic_google.png',
-            );
-          }),
-          Column(
-            children: [
-              const Text(
-                'By continuing, you agree to our ',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
+              text: 'Sign in with Phone number',
+              iconUrl: null,
+            ),
+            Consumer<LoginState>(builder: (context, snapshot, _) {
+              return CustomButtons(
+                onTap: () async {
+                  User? user = await authServices.signInWithGoogle();
+                  if (user != null) {
+                    snapshot.updateUser(user);
+                    await snapshot.logInStatus(true);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> PhoneNumberPicker()));
+                  }
+                },
+                text: 'Sign in with Google',
+                iconUrl: 'assets/ic_google.png',
+              );
+            }),
+            Column(
+              children: [
+                const Text(
+                  'By continuing, you agree to our ',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      /* Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => WebViewPage()),
-                      );*/
-                    },
-                    child: const Text(
-                      'Terms of Use',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        /* Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => WebViewPage()),
+                        );*/
+                      },
+                      child: const Text(
+                        'Terms of Use',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
-                  ),
-                  const Text(
-                    ' and ',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      /* Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => privacyPolicy()),
-                      );*/
-                    },
-                    child: const Text(
-                      'Privacy Policy',
+                    const Text(
+                      ' and ',
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
+                        color: Colors.grey,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Divider(
-                color: Colors.grey[300],
-                thickness: 1,
-                indent: 32,
-                endIndent: 32,
-              ),
-            ],
-          ),
-        ],
+                    GestureDetector(
+                      onTap: () {
+                        /* Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => privacyPolicy()),
+                        );*/
+                      },
+                      child: const Text(
+                        'Privacy Policy',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Divider(
+                  color: Colors.grey[300],
+                  thickness: 1,
+                  indent: 32,
+                  endIndent: 32,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -49,20 +49,19 @@ class _HomeMobileState extends State<HomeMobile> {
                       style: TextStyle(color: hColorLight),
                     ),
                     Flexible(
-                        child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          width: 15,
-                        );
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        return const AvatarWidget(
-                          foregroundImageUrl: '',
-                        );
-                      },
-                    ))
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(width: 15); // Consistent separator size
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          return const AvatarWidget(
+                            foregroundImageUrl: '',
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -98,22 +97,17 @@ class _HomeMobileState extends State<HomeMobile> {
                             Icons.search,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: (){
-                            Provider.of<HomeState>(context, listen: false).findConversation();
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: hBackgroundColor),
-                            child: const Center(
-                              child: Text('Direct Messages',
-                                  style: TextStyle(color: hSecondaryColor)),
-                            ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: hBackgroundColor),
+                          child: const Center(
+                            child: Text('Direct Messages',
+                                style: TextStyle(color: hSecondaryColor)),
                           ),
                         ),
                         GestureDetector(
@@ -143,50 +137,48 @@ class _HomeMobileState extends State<HomeMobile> {
                       '    Pinned Messages(2)',
                     ),
                   ),
-                  Consumer<MessageState>(builder: (context, messageState, _) {
-                    return FutureBuilder<Box<Conversation>>(
-                      future: hiveServices.openBox(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return const Center(child: Text('Error opening box'));
-                        } else {
-                          return ValueListenableBuilder(
-                            valueListenable:
-                                hiveServices.getConversationListenable(),
-                            builder: (context, Box<Conversation> box, _) {
-                              final conversationList = box.values
-                                  .toList()
-                                  .cast<Conversation>()
-                                  .reversed
-                                  .toList();
-                              return Flexible(
-                                child: ListView.builder(
-                                  itemCount: conversationList.length,
-                                  padding: EdgeInsets.zero,
-                                  itemBuilder: (context, index) => ChatCard(
-                                    conversation: conversationList[index],
-                                    press: () => Navigator.pushNamed(
-                                      context,
-                                      RouteName.messageScreen,
-                                      arguments: {
-                                        'conversation': conversationList[index],
-                                        'index': index,
-                                        'length': conversationList.length
-                                      },
-                                    ),
+                  FutureBuilder<Box<Conversation>>(
+                    future: hiveServices.openBox(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(
+                            child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return const Center(child: Text('Error opening box'));
+                      } else {
+                        return ValueListenableBuilder(
+                          valueListenable:
+                              hiveServices.getConversationListenable(),
+                          builder: (context, Box<Conversation> box, _) {
+                            final conversationList = box.values
+                                .toList()
+                                .cast<Conversation>()
+                                .reversed
+                                .toList();
+                            return Flexible(
+                              child: ListView.builder(
+                                itemCount: conversationList.length,
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, index) => ChatCard(
+                                  conversation: conversationList[index],
+                                  press: () => Navigator.pushNamed(
+                                    context,
+                                    RouteName.messageScreen,
+                                    arguments: {
+                                      'conversation': conversationList[index],
+                                      'index': index,
+                                      'length': conversationList.length
+                                    },
                                   ),
                                 ),
-                              );
-                            },
-                          );
-                        }
-                      },
-                    );
-                  })
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
+                  )
                 ],
               ),
             ),

@@ -1,5 +1,3 @@
-
-
 import '../view_imports.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,25 +14,23 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     loginState = Provider.of<LoginState>(context, listen: false);
+    loginState.getLoggedInStatus();
     _initializeApp();
   }
 
   Future<void> _initializeApp() async {
-   if(loginState.isLoggedIn){
-     print('Set the user online status');
-     await loginState.setOnlineStatus(); // Set the user online status.
-   }
-
+    if (loginState.isLoggedIn) {
+      print('Set the user online status');
+      await loginState.setOnlineStatus(); // Set the user online status.
+    }
     await Future.delayed(
-        const Duration(seconds: 3)); // Wait for the splash screen delay.
-
+        const Duration(seconds: 3));
     _navigateBasedOnLoginState();
   }
 
   void _navigateBasedOnLoginState() {
     final routeName =
         loginState.isLoggedIn ? RouteName.homeScreen : RouteName.loginScreen;
-
     Navigator.pushReplacementNamed(context, routeName);
   }
 

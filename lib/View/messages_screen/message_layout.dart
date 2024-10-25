@@ -4,7 +4,8 @@ import 'package:chats/View/messages_screen/message_web.dart';
 import '../view_imports.dart';
 
 class MessageLayout extends StatefulWidget {
-  const MessageLayout({super.key, required this.conversation,this.index,this.length});
+  const MessageLayout(
+      {super.key, required this.conversation, this.index, this.length});
 
   final Conversation conversation;
   final int? index;
@@ -24,26 +25,11 @@ class _MessageLayoutState extends State<MessageLayout> {
           return const MessageWeb();
         } else {
           return MessageMobile(
-            conversation: widget.conversation,
-            index: widget.index,
-              length: widget.length
-          );
+              conversation: widget.conversation,
+              index: widget.index,
+              length: widget.length);
         }
       },
     ));
   }
 }
-
-/* @override
-  void initState() {
-    super.initState();
-    String userId = "user1"; // Replace with the current user's ID
-    socketService.connect(userId);
-  }
-*/
-
-/* @override
-  void dispose() {
-    socketService.disconnect();
-    super.dispose();
-  }*/

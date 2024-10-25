@@ -1,3 +1,4 @@
+import 'package:chats/View-models/message_state.dart';
 import 'package:chats/View/messages_screen/widgets/audio_message.dart';
 import 'package:chats/View/messages_screen/widgets/text_message.dart';
 
@@ -8,15 +9,17 @@ class MessageItem extends StatelessWidget {
 
   final Messages messages;
 
+
   @override
   Widget build(BuildContext context) {
-    bool isSender = messages.senderId == 'user1';
+    final messageState = Provider.of<MessageState>(context,listen: false);
+    bool isSender = messages.senderId == messageState.senderId;
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
-        mainAxisAlignment: isSender?  MainAxisAlignment.start : MainAxisAlignment.end,
+        mainAxisAlignment: isSender?  MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          /// show user profile image
+          // TODO: show user profile image
          /* if(isSender)...[
             const CircleAvatar(
               radius: 12,
@@ -25,7 +28,7 @@ class MessageItem extends StatelessWidget {
             const SizedBox(width: 10),
           ],*/
           messageType(messages),
-          if (isSender == false) tick(messages),
+          if (isSender == true) tick(messages),
         ],
       ),
     );
@@ -33,7 +36,7 @@ class MessageItem extends StatelessWidget {
 }
 
 Widget messageType(Messages messages){
-  if (messages.text is String && !messages.text.contains('.')) {
+  if (!messages.text.contains('.')) {
     return TextMessage(message: messages);
   }else if (messages.text.contains('.mp3') || messages.text.contains('.wav')) {
     return AudioMessage(message: messages);

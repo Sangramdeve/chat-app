@@ -1,6 +1,6 @@
 export 'package:chats/Routing/route_name.dart';
 export 'package:chats/View-models/login_state.dart';
-export 'package:chats/View/widgets/button_widges.dart';
+export 'package:chats/View/login_screen/widgets/button_widges.dart';
 export 'package:chats/cores/services/auth.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:flutter/material.dart';
@@ -12,8 +12,8 @@ export 'package:chats/View/messages_screen/widgets/user_details_bar.dart';
 export 'package:chats/cores/services/socket_service.dart';
 export 'package:chats/View/view_imports.dart';
 export 'package:chats/View-models/home_state.dart';
-export 'package:chats/View/widgets/chat_card.dart';
-export 'package:chats/View/widgets/circle_avatar.dart';
+export 'package:chats/View/home_screen/widgets/chat_card.dart';
+export 'package:chats/View/home_screen/widgets/circle_avatar.dart';
 export 'package:chats/models/hive_models/conversation.dart';
 export 'package:chats/cores/services/hive_services.dart';
 export 'package:chats/View/splash_screen/splash_mobile.dart';

@@ -20,7 +20,7 @@ class TextMessage extends StatelessWidget {
         vertical: 20 / 2,
       ),
       decoration: BoxDecoration(
-        color: kPrimaryColor.withOpacity(true ? 1 : 0.1),//message!.isSender
+        color: kSecondaryColor.withOpacity(true ? 1 : 0.1),//message!.isSender
         borderRadius: BorderRadius.circular(30),
       ),
       child: Text(
